@@ -1,20 +1,18 @@
-in
+in   ; to rax
 pop rax
-in
+in ; to rbx
 pop rbx
-in
+in   ; to rcx
 pop rcx
 push rbx
 push rbx
-mul
+mul  ;rbx*rbx
 push 4
 push rax
 push rcx
-mul
-mul
-sub
-push -1
-mul
+mul ;rax*rcx
+mul   ; rax*4*rcx
+sub    ; rbx*rbx - 4*rax*rcx
 sqrt
 out
-HLT
+HlT

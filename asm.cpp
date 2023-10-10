@@ -28,6 +28,8 @@ void assembly(FILE* program, FILE* bin_program)
     assert(source != NULL);
     fread(source, sizeof(char), MAX_SIZE, program);
 
+    printf_ncommands(bin_program, source);
+
     char *command = (char*)calloc(MAX_LEN, sizeof(char));
     assert(command != NULL);
     double variable = 0;
@@ -118,7 +120,7 @@ void assembly_push(FILE* bin_program, char** source)
 
     assert(c_register != NULL);
 
-    if (sscanf(*source, "%lf", &variable))
+    if (sscanf(*source, " %lf ", &variable))
     {
         *source += len_of_number(variable) + 1;
         fprintf(bin_program, "%d %lf\n", 1, variable);
@@ -129,6 +131,7 @@ void assembly_push(FILE* bin_program, char** source)
         *source += strlen(c_register) + 1;
         fprintf(bin_program, "%d %d\n", 2, check_register(c_register));
     }
+
     (*source)--;
     skip_comment(source);
     free(c_register);
@@ -141,12 +144,14 @@ void assembly_pop(FILE* bin_program, char** source)
 
     fprintf(bin_program, "%d ", command_pop);
     char* c_register = (char*)calloc(SIZE_OF_REGISTER, sizeof(char));
+
     sscanf(*source, " %s ", c_register);
     *source += strlen(c_register) + 1;
-
     fprintf(bin_program, "%d %d\n", 2, check_register(c_register));
+
     (*source)--;
     skip_comment(source);
+    free(c_register);
 }
 
 void assembly_mul(FILE* bin_program, char** source)
@@ -254,4 +259,20 @@ void to_lower(char* str)
         *str = tolower(*str);
         str++;
     }
+}
+
+void printf_ncommands(FILE *bin_prog, char* source)
+{
+    int lines_count = 0;
+
+    size_t cnt = 0;
+
+    while (source[cnt] != '\0')
+    {
+        if (source[cnt] == '\n')
+            lines_count++;
+        cnt++;
+    }
+
+    fprintf(bin_prog, "%d\n", lines_count);
 }

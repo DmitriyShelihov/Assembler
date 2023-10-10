@@ -13,7 +13,7 @@ const int SIZE_OF_REGISTER = 10;
 #define END_OF_COLOUR "\x1b[39;49m"
 #define POSITION_IN_CODE __FILE__, __PRETTY_FUNCTION__, __LINE__
 
-/* this enumeration contains the assembly language command numbers */
+/* This enumeration contains the assembly language command numbers */
 enum COMMANDS
 {
     command_push = 33,
@@ -74,5 +74,6 @@ void skip_comment(char** source);
 
 void to_lower(char* str);
 
+void printf_ncommands(FILE* bin_prog, char* source);
 
 #endif

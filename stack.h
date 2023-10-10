@@ -18,7 +18,7 @@ extern const size_t canary_size;
 
 typedef uint32_t hash_t;
 
-struct stack
+struct Stack
 {
     canary_t left_canary;
     elem_t *data;
@@ -33,6 +33,6 @@ struct stack
     hash_t data_hash;
 };
 
-const size_t stk_size = sizeof(stack) - 2 * sizeof(hash_t);
+const size_t stk_size = sizeof(Stack) - 2 * sizeof(hash_t);
 
 #endif

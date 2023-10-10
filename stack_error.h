@@ -7,7 +7,7 @@
 #include "stack.h"
 #include <limits.h>
 
-const uint64_t canary = 0xCA11DED;
+const uint64_t canary = 0xDEDADED;
 
 const int poison = INT_MAX;
 
@@ -30,18 +30,18 @@ enum ERROR_CODE
 
 extern stack_result_t stack_errno;
 
-void stack_error_decode(uint32_t error);
+void Stack_error_decode(uint32_t error);
 
-void stack_dump(struct stack *stk, const char *file1, int line1, const char *func_name1, const char *arg_name1);
+void Stack_dump(struct Stack *stk, const char *file1, int line1, const char *func_name1, const char *arg_name1);
 
-uint32_t stack_is_invalid(const struct stack *stk);
+uint32_t Stack_is_invalid(const struct Stack *stk);
 
 #define STACK_ERROR(stk, error) do                                                  \
                     {                                                               \
                         fprintf(stderr, RED"ERROR:");                               \
-                        stack_error_decode((error));                                \
+                        Stack_error_decode((error));                                \
                         fprintf(stderr, END_OF_COLOR);                              \
-                        stack_dump((stk), __FILE__, __LINE__, __func__, (#stk));    \
+                        Stack_dump((stk), __FILE__, __LINE__, __func__, (#stk));    \
                     } while (0)
 
 

@@ -2,21 +2,34 @@
 #define STACK_FUNCTIONS_H
 
 #include "stack.h"
+#include "stack_error.h"
 
-stack_result_t stack_push(struct stack *stk, elem_t value);
+#include <assert.h>
 
-stack_result_t stack_pop(struct stack *stk, elem_t *value);
+const size_t CANARY_SIZE =  2*sizeof(canary_t);
+const int multiplier = 2;
+const int decrease_multiplier = 2;
 
-stack_result_t stack_realloc(struct stack *stk, int to_increase);
+enum REALLOC_DATA
+{
+    TO_DECREASE = 0,
+    TO_INCREASE = 1,
+};
 
-stack_result_t stack_ctor(struct stack *stk, int capacity, const char *file_name,
+stack_result_t Stack_push(struct Stack *stk, elem_t value);
+
+stack_result_t Stack_pop(struct Stack *stk, elem_t *value);
+
+stack_result_t Stack_realloc(struct Stack *stk, int to_increase);
+
+stack_result_t Stack_ctor(struct Stack *stk, int capacity, const char *file_name,
                           const char *func_name, const char *arg_name, int line);
 
-stack_result_t stack_dtor(struct stack *stk);
+stack_result_t Stack_dtor(struct Stack *stk);
 
-stack_result_t stack_realloc_if_needed(struct stack *stk);
+stack_result_t Stack_realloc_if_needed(struct Stack *stk);
 
-#define STACK_CTOR(stk, capacity) stack_ctor((stk), (capacity),   \
+#define stack_ctor(stk, capacity) Stack_ctor((stk), (capacity),   \
                      __FILE__, __func__, (#stk), __LINE__)
 
 #endif
